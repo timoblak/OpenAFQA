@@ -1,0 +1,1 @@
+from afqa_toolbox.segmentation.intensity_based import std_segmentation, hist_equalization_segmentation
