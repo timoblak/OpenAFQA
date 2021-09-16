@@ -1,0 +1,13 @@
+*__pycache__*
+*.pyc
+*.png
+*.bmp
+*.pgm
+*.txt
+*.exe
+*.dll
+*.pt
+*.egg-info
+.idea
+.ipynb_checkpoints
+.devfiles
