@@ -14,7 +14,9 @@ A global quality assessment method based on Gabor filters by Shen [*Swafford et 
 ### Ours 
 
 #### Baseline methods 
-The predictive pipeline along with the pre-trained models can be found in directory [baseline](baseline). If you use our methods in your research, please cite: 
+The predictive pipeline can be found in directory [baseline](baseline). The pre-trained models can be downloaded from this [link](https://unilj-my.sharepoint.com/:u:/g/personal/tim_oblak_fri1_uni-lj_si/EUDOVHWzcyVDpI56dxyutT0BJ2HC5H_aqJmUrqkxA_YW8Q?e=CxtBn2).
+
+If you use our methods in your research, please cite: 
     
     T. Oblak, R. Haraksim, L. Beslay, P. Peer. 
     Fingermark Quality Assessment: An Open-Source Toolbox. 
