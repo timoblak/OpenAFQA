@@ -1,6 +1,9 @@
 # OpenAFQA
 
-![Logo](resources/fm.png)
+<p align="center">
+  <img src="resources/fm.png">
+</p>
+
 The repository for developing Automated Fingermark Quality Assessment methods.
 
 
