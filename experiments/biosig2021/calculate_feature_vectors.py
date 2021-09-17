@@ -41,7 +41,7 @@ SHOW = True
 # ##################### FEATURE EXTRACTION #####################
 
 fingermark_ids = os.listdir(DATASET)
-for im_num, im_name in enumerate(fingermark_ids[2:]):
+for im_num, im_name in enumerate(fingermark_ids):
     print("Processing image " + str(im_num + 1) + "/" + str(len(fingermark_ids)) + ": " + im_name)
 
     fingermark_path = DATASET + im_name
