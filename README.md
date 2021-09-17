@@ -1,11 +1,10 @@
 # OpenAFQA
 
+The repository for developing Automated Fingermark Quality Assessment methods.
+
 <p align="center">
   <img src="resources/fm.png">
 </p>
-
-The repository for developing Automated Fingermark Quality Assessment methods.
-
 
 ## Contents
     
