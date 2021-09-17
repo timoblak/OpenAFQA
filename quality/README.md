@@ -9,7 +9,7 @@ A collection of implemented related work and methods, developed by us.
 A minutiae based quality assessment of fingermarks. This is an implementation of paper from by [*Swafford et al*](https://doi.org/10.1016/j.forsciint.2021.110703). For more info, see the original paper. 
 
 #### Gabor quality
-A global quality assessment method based on Gabor filters by Shen [*Swafford et al*](https://doi.org/10.1007/3-540-45344-X_39). For more info, see the original paper.
+A global quality assessment method based on Gabor filters by [*Shen et al*](https://doi.org/10.1007/3-540-45344-X_39). For more info, see the original paper.
 
 ### Ours 
 
