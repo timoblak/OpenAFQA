@@ -3,7 +3,6 @@
 *.png
 *.bmp
 *.pgm
-*.txt
 *.exe
 *.dll
 *.pt
