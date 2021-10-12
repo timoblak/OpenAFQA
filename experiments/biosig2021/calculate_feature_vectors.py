@@ -121,7 +121,7 @@ for im_num, im_name in enumerate(fingermark_ids):
 
     print("Computing global features..")
     # ### COMPUTE GLOBAL FEATURES ###
-    results[:, :, 14] = FeatOFL.ofl_blocks(results[:, :, 2])
+    results[:, :, 14] = FeatOFL.ofl_blocks(results[:, :, 3])
     results[:, :, 15] = FeatGabor(BLK_SIZE, angle_num=8).gabor_stds(image)
 
     print("Computing minutiae features..")
