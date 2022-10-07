@@ -45,8 +45,9 @@ def get_rotated_block(block, orientation, pad=False):
 
     c_block = block.shape[0] / 2  # flaat
     ic_block = block.shape[0] // 2  # int
-    if c_block != ic_block:
-        print("Warning: Wrong block size! Consider using even number.")
+
+    #if c_block != ic_block:
+    #    print("Warning: Wrong block size! Consider using even number.")
 
     if pad:
         inblock = cv2.copyMakeBorder(block, 2, 2, 2, 2, borderType=cv2.BORDER_CONSTANT, value=0)
@@ -121,7 +122,7 @@ def covcoef(block, mode="diff_cv"):
 
 
 def orient(a, b, c):
-    """Calculates principal axis of variation from image covariances of an image block
+    """Calculates principal axis of variation from  of an image block
 
     :param a: Image covariance a
     :param b: Image covariance b

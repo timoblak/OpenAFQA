@@ -121,7 +121,7 @@ class FeatLCS:
             nw_vmin = w_vmin / v_scale_norm  # Changed to v_scale_norm
             nw_vmax = w_vmax / v_scale_norm  # Changed to v_scale_norm
         else:  # NOT ridge / valley structure, skip computation
-            return None
+            return np.nan
 
         # Clarity test
         mu_nw_r = nw_r.mean()

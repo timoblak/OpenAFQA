@@ -2,7 +2,6 @@ from afqa_toolbox.features import block_properties
 import numpy as np
 import cv2
 
-
 class FeatACUT:
     """Feature extraction for Acutance"""
     def __init__(self, blk_size=32, foreground_ratio=0.8):
@@ -52,10 +51,13 @@ class FeatACUT:
         :return: calculated metric
         """
         # We use an inverse image when calculating s3pg and bimodal separation, since this is how original method does it
+
         block_inverse = cv2.bitwise_not(block)
 
         # Apply adaptive thresholding on the ROI to calculate masks for ridges and valleys
+
         ridges = cv2.adaptiveThreshold(block_inverse, 1, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 0)
+
         valleys = 1 - ridges
 
         block_ridges = block_inverse.copy()
@@ -70,7 +72,7 @@ class FeatACUT:
                 diff = block_float[i, j] - block_float[i - 1:i + 2, j - 1:j + 2]
                 mean_diffs += np.sum(diff * diff)
         
-        return np.log(mean_diffs / (8 * (block.shape[0] - 2) * (block.shape[0] - 2)))
+        return np.log(mean_diffs / (8 * (block.shape[0] - 2) * (block.shape[1] - 2)))
 
 
 

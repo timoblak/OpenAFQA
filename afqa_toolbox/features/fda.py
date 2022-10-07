@@ -94,7 +94,7 @@ class FeatFDA:
         #print(f_max_idx, abs_dft[f_max_idx], iqm_denom)
         #print(f_max_idx)
         if f_max_idx == 0:
-            return 0
+            return np.nan
 
         return ((abs_dft[f_max_idx] +
                 0.3 * (abs_dft[f_max_idx - 1] +

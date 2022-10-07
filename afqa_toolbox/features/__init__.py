@@ -13,4 +13,5 @@ from afqa_toolbox.features.sep import FeatSEP
 from afqa_toolbox.features.mow import FeatMOW
 from afqa_toolbox.features.acut import FeatACUT
 from afqa_toolbox.features.sf import FeatSF
+from afqa_toolbox.features.ori import FeatOrient
 

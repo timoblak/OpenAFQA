@@ -83,4 +83,4 @@ class FeatMOW:
         # The equation in ImageJ macro is: (mow_px/ppi)*100 - percentage of an inch?
         if len(minor_axes) > 0:
             return np.mean(minor_axes) / ppi * 100
-        return 0
+        return np.nan
