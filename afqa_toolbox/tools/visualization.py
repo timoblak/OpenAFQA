@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.cm as cm
-
+import matplotlib as mpl
 
 def visualize_orientation_field(image, orientation, blk_size=20):
     """Vizualized the orientation field of a friction ridge image
@@ -43,7 +43,7 @@ def visualize_minutiae(image, template, mask=None, min_quality=0, show_type=Fals
     :return: a color image of visualized minutiae points
     """
     box_size = 5
-    thickness = 1
+    thickness = 2
     line_radius = 15
 
     image_color = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
@@ -62,7 +62,7 @@ def visualize_minutiae(image, template, mask=None, min_quality=0, show_type=Fals
 
             val = mnt["minquality"]
 
-            color = np.array(cm.jet(val)[:3])*255  # [0, 0, 255]
+            color = np.array(cm.get_cmap('jet')(val)[:3][::-1])*255  # [0, 0, 255]
 
             # counterclockwise, starting from the right
             x_new = int(round(x + line_radius * np.cos(angle)))

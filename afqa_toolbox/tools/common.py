@@ -15,7 +15,7 @@ def normed(image):
         return image
     img = image.copy()
     img -= img[~np.isnan(img)].min()
-    img /= img[~np.isnan(img)].max()
+    img /= img[~np.isnan(img)].max() + 1e-7
     return img
 
 
