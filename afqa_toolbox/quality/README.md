@@ -7,8 +7,8 @@ A collection of implemented related work and methods, developed by us.
 
 #### AFQA Ensemble (2022)
 Here are the implementations of methods presented by Oblak et al. (Knowledge-based systems, 2022). They include:
-- *The classic ensemble* (The classic predictive pipeline - Preprocessing, feature extraction, and a random forest quality regressor, pretrained on SD302 dataset)
-- *The deep learning ensemble* (A DenseNet model, pretrained on SD302 dataset)
+- **The classic ensemble** (The classic predictive pipeline - Preprocessing, feature extraction, and a random forest quality regressor, pretrained on SD302 dataset)
+- **The deep learning ensemble** (A DenseNet model, pretrained on SD302 dataset)
 
 Both methods also include a pretrained fusion method. The pre-trained models and other external files can be downloaded from this [link](https://unilj-my.sharepoint.com/:u:/g/personal/tim_oblak_fri1_uni-lj_si/EWsIr-hK01NJit-NN8XufwIB3uTDYcz4xBjcQ9rYA_rzHA?e=kOWa2n).
 For more information on how to use these methods, see [Toolbox examples](../../toolbox_examples).

@@ -25,8 +25,8 @@ This library is a work in progress. We will update it as we continue our develop
 ### Latest updates 
 
 
-- (October, 2022) *The AFQA Ensemble models* - This release includes two approaches to AFQA: (a) a classic predictive pipeline with preprocessing, feature extraction and feature vector creation steps, as well as (b) a deep learning model which processes raw fingermark images. We also include a fusion method that combines multiple quality scores into one. Read more about this contribution in our [Knowledge-Based Systems publication](https://doi.org/10.1016/j.knosys.2022.109148).      
-- (September, 2021) *Initial commit* - We released the AFQA toolbox, a collection of algorithms for processing fingerprint/fingermark images, written in Python. We also provided the initial baseline models for quality assessment of fingermarks. Read more about this contribution in our [BIOSIG publication](https://doi.org/10.1109/BIOSIG52210.2021.9548318).     
+- (October, 2022) **The AFQA Ensemble models** - This release includes two approaches to AFQA: (a) a classic predictive pipeline with preprocessing, feature extraction and feature vector creation steps, as well as (b) a deep learning model which processes raw fingermark images. We also include a fusion method that combines multiple quality scores into one. Read more about this contribution in our [Knowledge-Based Systems publication](https://doi.org/10.1016/j.knosys.2022.109148).      
+- (September, 2021) **AFQA Toolbox** - We released the AFQA toolbox, a collection of algorithms for processing fingerprint/fingermark images, written in Python. We also provided the initial baseline models for quality assessment of fingermarks. Read more about this contribution in our [BIOSIG publication](https://doi.org/10.1109/BIOSIG52210.2021.9548318).     
 
  
 ### References
