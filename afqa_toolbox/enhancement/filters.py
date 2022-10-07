@@ -4,7 +4,7 @@ from afqa_toolbox.tools import normed
 
 
 def dog_filter(image, ksize, sigma, log_enhance=True):
-    """Difference of Gaussians local contrast enhancement
+    """Unsharp mesking  local contrast enhancement
 
     :param image: Input image
     :param ksize: Size of Gaussian kernel
