@@ -6,15 +6,13 @@ from afqa_toolbox.tools import normed
 from time import time
 
 
-latent = "D:/NIST datasets/SD 302/sd302e/images/latent/png/00002306_4B_X_8296_IN_D800_1110PPI_16BPC_1CH_LP02_1.png"
-
-
+latent = ""  # Path to latent/fingermark image
 image = cv2.imread(latent, 0)
 
-# Determine PPI
-t0 = time()
+# Get PPI from filename if part of the NIST SD 301/302 datasets, otherwise specify
 ppi = int(latent.split("\\")[-1].split("_")[6].replace("PPI", ""))
 #ppi = 500
+
 if ppi != 500:
     image = cv2.resize(image, None, fx=500/ppi, fy=500/ppi, interpolation=cv2.INTER_NEAREST)
 cv2.imshow("image", cv2.resize(image, None, fx=1, fy=1, interpolation=cv2.INTER_NEAREST))
