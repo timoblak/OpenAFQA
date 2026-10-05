@@ -55,8 +55,8 @@ LABELS = "qualities.pkl"
 #   ...
 # }
 
-DATASET = "feature_vector_dataset/train/"
-# DATASET is the location of saved feature vectors
+DATA_FOLDER = "feature_vector_dataset/"
+# DATA_FOLDER is the location of saved feature vectors, split into train/ and test/ subfolders
 # The feature vectors can be generated with "calculate_feature_vectors.py"
 
 #VFQ

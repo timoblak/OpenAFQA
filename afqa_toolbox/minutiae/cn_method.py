@@ -228,7 +228,7 @@ class MinutiaeExtraction:
                     to_remove.add(i)
                     to_remove.add(j)
         filtered_minutiae = []
-        for i in range(1, len(minutiae)):
+        for i in range(len(minutiae)):
             if i not in to_remove:
                 filtered_minutiae.append(minutiae[i])
         return filtered_minutiae

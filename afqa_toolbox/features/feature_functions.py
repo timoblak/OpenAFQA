@@ -121,17 +121,22 @@ def covcoef(block, mode="diff_cv"):
     return a, b, c
 
 
-def orient(a, b, c):
+def orient(a, b, c, legacy=False):
     """Calculates principal axis of variation from  of an image block
+
+    The dominant gradient direction satisfies tan(2 * theta) = 2c / (a - b).
+    NFIQ 2 (and earlier versions of this toolbox) omit the factor 2, which is kept as a legacy option,
+    since the pretrained ClassicEnsemble models were trained on features computed this way.
 
     :param a: Image covariance a
     :param b: Image covariance b
     :param c: Image covariance c
+    :param legacy: Use the NFIQ 2 compatible formula without the factor 2
     :return: Estimated angle of principal axis
     """
     tmp = (a - b)
     denom = (c * c + tmp * tmp) + EPS
-    sin2theta = c / denom
+    sin2theta = (c if legacy else 2 * c) / denom
     cos2theta = tmp / denom
     return np.arctan2(sin2theta, cos2theta) / 2
 

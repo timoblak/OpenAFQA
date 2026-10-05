@@ -64,7 +64,7 @@ class FeatACUT:
         block_ridges[valleys == 1] = 0
         #cv2.imshow("block_ridges", cv2.resize(block_ridges, None, fx=5, fy=5, interpolation=cv2.INTER_NEAREST))
 
-        block_float = block_inverse.astype(np.float)
+        block_float = block_inverse.astype(np.float64)
 
         mean_diffs = 1e-5
         for i in range(1, block.shape[0] - 1):

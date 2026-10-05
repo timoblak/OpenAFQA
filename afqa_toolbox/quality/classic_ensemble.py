@@ -14,7 +14,7 @@ class ClassicEnsemble:
     """ Implementation of the classic ensemble approach from article:
 
         T. Oblak, R. Haraksim, P. Peer, L. Beslay.
-        Fingermark quality assessment framework with classic and deep learning ensemble resources.
+        Fingermark quality assessment framework with classic and deep learning ensemble models.
         Knowledge-Based Systems, Volume 250, 2022
 
     """
@@ -79,6 +79,8 @@ class ClassicEnsemble:
         if len(input_image.shape) != 2 or input_image.dtype != np.uint8:
             raise TypeError("The input image is expected to be a 2D array in 8 bit grayscale color.")
 
+        # Work on a copy so the caller's image is not modified
+        input_image = input_image.copy()
         if self.background_color:
             input_image[input_image == 255] = int(input_image.mean())
 
@@ -91,7 +93,6 @@ class ClassicEnsemble:
 
         # Segment the input image
         segmentation_mask = hist_equalization_segmentation(input_image, threshold=127)
-        cv2.bitwise_and(input_image, input_image, mask=segmentation_mask)
         maskim = segmentation_mask / 255
 
         results[:, :, 0] = cv2.resize(maskim, dsize=(map_cols, map_rows), interpolation=cv2.INTER_NEAREST)
@@ -109,7 +110,8 @@ class ClassicEnsemble:
                 # If the accepted number of pixels in block is foreground
                 if results[br, bc, 0] == 1:
                     cova, covb, covc = feat.covcoef(patch, "c_diff_cv")
-                    orient_value = feat.orient(cova, covb, covc)
+                    # The pretrained models use the legacy (NFIQ 2 compatible) orientation
+                    orient_value = feat.orient(cova, covb, covc, legacy=True)
                     results[br, bc, 1] = patch.mean()
                     results[br, bc, 2] = patch.std()
                     results[br, bc, 3] = orient_value
@@ -210,7 +212,11 @@ class ClassicEnsemble:
         mor = int(ensemble_predictions["mor"])
         nfq = int(ensemble_predictions["nfq"])
 
-        pca_transform = ((self.pca_coeffs["model"].transform([[nfq, vfq, lqm, mor]]) - self.pca_coeffs["min"]) / (self.pca_coeffs["max"] - self.pca_coeffs["min"]))[0][0]
+        # PCA projection computed from the fitted parameters (equivalent to PCA.transform without whitening),
+        # since newer scikit-learn versions can't use the PCA object pickled with scikit-learn 0.24
+        pca = self.pca_coeffs["model"].steps[-1][1]
+        projection = (np.array([nfq, vfq, lqm, mor]) - pca.mean_) @ pca.components_[0]
+        pca_transform = (projection - self.pca_coeffs["min"]) / (self.pca_coeffs["max"] - self.pca_coeffs["min"])
 
         fusion_quality = int(np.clip(pca_transform, a_min=0, a_max=100) * 100)
         return fusion_quality

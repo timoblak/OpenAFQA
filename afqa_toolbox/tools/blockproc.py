@@ -21,7 +21,7 @@ def blockproc(image, block_shape, fun, *fun_args, **fun_kwargs):
     result = np.zeros(shape=(block_rows, block_cols))
     for i, r in enumerate(range(0, img_h, block_h)):
         for j, c in enumerate(range(0, img_w, block_w)):
-            patch = image[r:min(r + block_w, img_h), c:min(c + block_w, img_w)]
+            patch = image[r:min(r + block_h, img_h), c:min(c + block_w, img_w)]
             result[i, j] = fun(patch, *fun_args, **fun_kwargs)
 
     return result
@@ -43,5 +43,5 @@ def blockproc_inplace(image, block_shape, fun, *fun_args, **fun_kwargs):
 
     for i, r in enumerate(range(0, img_h, block_h)):
         for j, c in enumerate(range(0, img_w, block_w)):
-            image[r:min(r + block_w, img_h), c:min(c + block_w, img_w)] = fun(image[r:min(r + block_w, img_h), c:min(c + block_w, img_w)], *fun_args, **fun_kwargs)
+            image[r:min(r + block_h, img_h), c:min(c + block_w, img_w)] = fun(image[r:min(r + block_h, img_h), c:min(c + block_w, img_w)], *fun_args, **fun_kwargs)
     return image

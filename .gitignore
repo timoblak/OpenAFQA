@@ -10,3 +10,4 @@
 .idea
 .ipynb_checkpoints
 .devfiles
+/resources/*.pkl

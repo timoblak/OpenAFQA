@@ -159,8 +159,6 @@ if __name__ == "__main__":
                 epoch_metrics["val_l1"].append(l1_loss.item())
                 epoch_metrics["val_r2"].append(r2_acc.item())
 
-        writer.add_figure('val predictions vs. actuals', plot_classes_preds(data, pred_labels, true_labels, num=10), global_step=epoch)
-
         metrics["val_l1"].append(np.mean(epoch_metrics["val_l1"]))
         metrics["val_l2"].append(np.mean(epoch_metrics["val_l2"]))
         metrics["val_r2"].append(np.mean(epoch_metrics["val_r2"]))

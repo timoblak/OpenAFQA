@@ -103,7 +103,14 @@ class DFIQI:
 
         return (s3pg, sep, acut, mow, sf), (s3pg_fx, sep_fx, acut_fx, mow_fx, sf_fx)
 
-    def predict(self, minutiae_data, return_lqs=True):
+    def predict(self, image, minutiae_data, return_lqs=True):
+        """Predicts the DFIQI global quality metrics from local quality around minutiae
+
+        :param image: Grayscale fingermark image in 500 ppi
+        :param minutiae_data: List of minutiae locations [(x, y), ...]
+        :param return_lqs: Whether to also return the local quality scores of individual minutiae
+        :return: Value, difficulty and complexity (and optionally the local quality scores)
+        """
         lqs = []
         for minutia in minutiae_data:
             x, y = minutia
@@ -159,7 +166,7 @@ if __name__ == "__main__":
         print("---------------------------")
 
         t0 = time.time()
-        v, d, c, lqs = q.predict(minutiae_data, return_lqs=True)
+        v, d, c, lqs = q.predict(image, minutiae_data, return_lqs=True)
         total_time = time.time() - t0
 
         feat_qual = 0

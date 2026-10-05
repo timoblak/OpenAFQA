@@ -105,7 +105,7 @@ class FeatRVU:
 
             ratios = change_idx_complete[:-1] / change_idx_complete[1:]
 
-            begrid = int(ridval_complete[0])
+            begrid = int(ridval_complete[0, 0])
             ratios[begrid::2] = 1 / ratios[begrid::2]
             if ratios.size:
                 return ratios.std()

@@ -59,7 +59,7 @@ class FJFXWrapper:
         cv2.imwrite(image_filename, img)
 
         # Run FJFX on saved image
-        proc = subprocess.Popen([self.path_binary, image_filename, template_filename], stdout=subprocess.PIPE, shell=True)
+        proc = subprocess.Popen([self.path_binary, image_filename, template_filename], stdout=subprocess.PIPE)
 
         (out, err) = proc.communicate()
         if out.decode("utf-8").strip() == "Failed feature extraction" or err:

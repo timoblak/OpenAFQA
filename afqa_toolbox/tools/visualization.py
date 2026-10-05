@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import matplotlib.cm as cm
 import matplotlib as mpl
 
 def visualize_orientation_field(image, orientation, blk_size=20):
@@ -62,7 +61,8 @@ def visualize_minutiae(image, template, mask=None, min_quality=0, show_type=Fals
 
             val = mnt["minquality"]
 
-            color = np.array(cm.get_cmap('jet')(val)[:3][::-1])*255  # [0, 0, 255]
+            # Quality is in range [0, 100], colormap expects floats in range [0, 1]
+            color = np.array(mpl.colormaps['jet'](val / 100)[:3][::-1])*255  # [0, 0, 255]
 
             # counterclockwise, starting from the right
             x_new = int(round(x + line_radius * np.cos(angle)))

@@ -57,9 +57,9 @@ class FeatSEP:
         ridges = cv2.adaptiveThreshold(block_inverse, 1, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 0)
         valleys = 1 - ridges
 
-        block_float = block_inverse.astype(np.float)
-        valley_px = block_float[valleys.astype(np.bool)]
-        ridges_px = block_float[ridges.astype(np.bool)]
+        block_float = block_inverse.astype(np.float64)
+        valley_px = block_float[valleys.astype(bool)]
+        ridges_px = block_float[ridges.astype(bool)]
 
         # We calculate: (mean(S) - mean(B)) / 2 * (std(B) + std(S))
         return (ridges_px.mean() - valley_px.mean()) / (2 * (ridges_px.std() + valley_px.std()))

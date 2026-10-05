@@ -93,7 +93,7 @@ for im_num, im_name in enumerate(fingermark_ids):
             if results[br, bc, 0] == 1:  # mask.sum()/(BLK_SIZE**2) >= ACCEPTED_FG_RATIO:
 
                 cova, covb, covc = covcoef(patch, "c_diff_cv")
-                orient_value = orient(cova, covb, covc)
+                orient_value = orient(cova, covb, covc, legacy=True)
                 results[br, bc, 1] = patch.mean()
                 results[br, bc, 2] = patch.std()
                 results[br, bc, 3] = orient_value

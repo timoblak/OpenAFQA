@@ -74,5 +74,5 @@ class FeatRPS:
             radial_ps = roi_power_sum
         else:
             tmp = roi_power_sum[0:len(roi_power_sum) - m]
-            radial_ps = np.reshape(tmp, newshape=(self.rad, int((len(roi_power_sum) - m) / self.rad))).sum(axis=1)
+            radial_ps = np.reshape(tmp, (self.rad, int((len(roi_power_sum) - m) / self.rad))).sum(axis=1)
         return radial_ps.max()

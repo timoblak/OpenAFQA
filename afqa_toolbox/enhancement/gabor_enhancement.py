@@ -59,7 +59,7 @@ class GaborEnhancement:
         ksize = ksize+1 if ksize % 2 == 0 else ksize
         grad_xx = cv2.GaussianBlur(grad_xx, (ksize, ksize), self.orient_blocksigma)
         grad_yy = cv2.GaussianBlur(grad_yy, (ksize, ksize), self.orient_blocksigma)
-        grad_xy = cv2.GaussianBlur(grad_xy, (ksize, ksize), self.orient_blocksigma)
+        grad_xy = 2 * cv2.GaussianBlur(grad_xy, (ksize, ksize), self.orient_blocksigma)
 
         # Analytic solution
         denom = np.sqrt(grad_xy**2 + (grad_xx - grad_yy)**2) + EPS

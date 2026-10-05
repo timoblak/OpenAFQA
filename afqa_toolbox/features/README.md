@@ -17,7 +17,7 @@ We implement a number of NFIQ 2 local feature. For more information about these,
 - Orientation Certainty Level [`FeatOCL`]
 - Orientation Flow [`FeatOFL`]
 - Ridge Valley Uniformity [`FeatRVU`]
-- Local orientation based on image gradient covariances [`orient()`]   
+- Local orientation based on image gradient covariances [`orient()`]. Since 2026, the orientation is computed with the correct formula tan(2θ) = 2c / (a - b). The NFIQ 2 formula, which omits the factor 2, is available with `orient(a, b, c, legacy=True)`.   
 - Local mean and standard deviation [`FeatStats`]
 
 ##### DFIQI features

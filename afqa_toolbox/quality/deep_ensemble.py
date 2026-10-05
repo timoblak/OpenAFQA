@@ -19,13 +19,14 @@ class RegressionHead(nn.Module):
 
 
 class AFQAModel(nn.Module):
-    def __init__(self, outputs, fcn=256, pretrained=True):
+    def __init__(self, outputs, fcn=256, pretrained=False):
         super(AFQAModel, self).__init__()
         # Parameters
         self.outputs = outputs
         self.fcn = fcn
 
-        self.encoder = models.densenet121(pretrained)
+        # ImageNet weights are only needed for training, at inference they are replaced by the checkpoint
+        self.encoder = models.densenet121(weights=models.DenseNet121_Weights.DEFAULT if pretrained else None)
 
         # Pretrained weights to grayscale
         self.encoder.features[0].weight = nn.Parameter(torch.sum(self.encoder.features[0].weight, dim=1, keepdim=True))
@@ -41,8 +42,10 @@ class AFQAModel(nn.Module):
         out = self.output(features_vector)
         return out
 
-    def load_weights(self, path):
-        checkpoint = torch.load(path)
+    def load_weights(self, path, device="cpu"):
+        # The checkpoint also stores training metadata (numpy scalars), which requires weights_only=False.
+        # Only load checkpoints from a trusted source.
+        checkpoint = torch.load(path, map_location=device, weights_only=False)
         self.load_state_dict(checkpoint['model_state_dict'])
 
 
@@ -50,7 +53,7 @@ class DeepEnsemble:
     """ Implementation of the deep learning ensemble approach from article:
 
         T. Oblak, R. Haraksim, P. Peer, L. Beslay.
-        Fingermark quality assessment framework with classic and deep learning ensemble resources.
+        Fingermark quality assessment framework with classic and deep learning ensemble models.
         Knowledge-Based Systems, Volume 250, 2022
     """
     RESOURCES_PATH = "afqa_toolbox.resources"
@@ -61,10 +64,9 @@ class DeepEnsemble:
     def __init__(self, deep_model_path=None, pca_coeffs_path=None, device="cpu"):
         """Initialize
 
-        :param deep_model_path: Size of individual blocks
-        :param pca_coeffs_path: Width of slanted block
-        :param device: Width of slanted block
-        :return:
+        :param deep_model_path: Path to the pretrained DenseNet checkpoint (default: resources location)
+        :param pca_coeffs_path: Path to the pretrained PCA fusion model (default: resources location)
+        :param device: Torch device on which the model is executed (e.g. "cpu" or "cuda:0")
         """
         self.device = device
         self.imsize = 512
@@ -77,7 +79,8 @@ class DeepEnsemble:
             self.pca_coeffs = pickle.load(handle)
 
         self.deep_model = AFQAModel(outputs=4, fcn=512).to(device)
-        self.deep_model.load_weights(deep_model_path)
+        self.deep_model.load_weights(deep_model_path, device=device)
+        self.deep_model.eval()
 
     def check_default_location(self, given_path, default_path):
         if given_path is None:
@@ -101,8 +104,9 @@ class DeepEnsemble:
         x = np.expand_dims(x, 0)
         x = np.expand_dims(x, 0)
 
-        pred_labels = self.deep_model(torch.from_numpy(x).to(self.device))
-        predictions = pred_labels.squeeze(1).detach().cpu().numpy()[0]
+        with torch.no_grad():
+            pred_labels = self.deep_model(torch.from_numpy(x).to(self.device))
+        predictions = pred_labels.cpu().numpy()[0]
 
         ensemble_predictions = {}
         for model, prediction in zip(self.MODEL_NAMES, predictions):
@@ -119,8 +123,11 @@ class DeepEnsemble:
         lqm = int(ensemble_predictions["lqm"])
         mor = int(ensemble_predictions["mor"])
 
-        pca_transform = ((self.pca_coeffs["model"].transform([[nfq, vfq, lqm, mor]]) - self.pca_coeffs["min"]) / (
-                    self.pca_coeffs["max"] - self.pca_coeffs["min"]))[0][0]
+        # PCA projection computed from the fitted parameters (equivalent to PCA.transform without whitening),
+        # since newer scikit-learn versions can't use the PCA object pickled with scikit-learn 0.24
+        pca = self.pca_coeffs["model"].steps[-1][1]
+        projection = (np.array([nfq, vfq, lqm, mor]) - pca.mean_) @ pca.components_[0]
+        pca_transform = (projection - self.pca_coeffs["min"]) / (self.pca_coeffs["max"] - self.pca_coeffs["min"])
 
         fusion_quality = int(np.clip(pca_transform, a_min=0, a_max=100) * 100)
         return fusion_quality
