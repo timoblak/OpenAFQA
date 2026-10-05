@@ -1,17 +1,27 @@
 import cv2
-from afqa_toolbox.quality import DeepEnsemble, ClassicEnsemble
+import torch
+from afqa_toolbox.quality import DeepEnsemble, ClassicEnsemble, PAFQA
 import time
 
 
 latent = ""  # Path to latent/fingermark image
 image = cv2.imread(latent, 0)
 
+pafqa_model_path = "external_resources/model_pafqa_resnet34.pt"
 deep_model_path = "external_resources/model_densenet121.pt"
 classic_model_path = "external_resources/models_randomforest.pkl"
 
 # For improved performance, the deep models can be executed on the GPU
-# device = "cpu"
-device = "cuda:0"
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+
+pafqa = PAFQA(model_path=pafqa_model_path, device=device)
+t0 = time.time()
+quality, uncertainty = pafqa.predict(image, return_uncertainty=True)
+
+print("--- Results pAFQA model ---")
+print("Execution time: " + str(time.time() - t0))
+print("Quality (1-100):", quality)
+print("Uncertainty (std of predicted distribution):", uncertainty)
 
 deep_q = DeepEnsemble(deep_model_path=deep_model_path, device=device)
 t0 = time.time()
